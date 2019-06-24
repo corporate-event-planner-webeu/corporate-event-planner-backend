@@ -30,18 +30,10 @@ module.exports = {
   },
 
   production: {
-    client: 'postgresql',
-    connection: {
-      database: 'corporate-event-planner',
-      user:     'username',
-      password: 'password'
-    },
-    pool: {
-      min: 2,
-      max: 10
-    },
+    client: 'pg',
+    connection: process.env.DATABASE_URL,
     migrations: {
-      tableName: './data/migrations'
+      directory: './data/migrations'
     },
     useNullAsDefault: true,
   },
