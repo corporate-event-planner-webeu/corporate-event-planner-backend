@@ -1,5 +1,5 @@
 const express = require('express');
-// const bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 // const { authenticate } = require('../authenticate');
 
 const router = express.Router();
@@ -51,4 +51,30 @@ router.delete('/:id',  (req, res) => {
         res.status(500).json(error.userNotRemoved);
       });
 });
+
+// [PUT] a user by id
+// will need restricted middleware
+router.put('/:id', (req, res) => {
+  const { id } = req.params;
+  const user = req.body;
+  if (user.password) {
+    const hash = bcrypt.hashSync(user.password, 12);
+    user.password = hash;
+  }
+  Users.updateUser(user, id)
+      .then((data) => {
+        if (!data) {
+          res.status(404).json(error.userNotFound);
+        } else {
+          if (user.password) {
+            user.password = undefined;
+          }
+          res.status(200).json({ user: { id, ...user } });
+        }
+      })
+      .catch((error) => {
+        res.status(500).json(error.userNotUpdated);
+      });
+});
+
 module.exports = router;

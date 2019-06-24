@@ -8,8 +8,11 @@ const getUserById = id => db('users')
 
 const deleteUser = id => db('users').where({ id }).del();
 
+const updateUser = (user, id) => db('users').where({ id }).update(user);
+
 module.exports = {
   getUsers,
   getUserById,
   deleteUser,
+  updateUser,
 };

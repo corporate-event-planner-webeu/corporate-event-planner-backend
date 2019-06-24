@@ -11,6 +11,7 @@ const errorMessage = {
   userNotRetrieved: { errorMessage: 'The user information could not be retrieved.' },
   userNotFound: { errorMessage: 'The user with the specified ID does not exist.' },
   userNotRemoved: { errorMessage: 'The user could not be removed.' },
+  userNotUpdated: { errorMessage: 'The user information could not be modified.' },
 };
 
 module.exports = errorMessage;
