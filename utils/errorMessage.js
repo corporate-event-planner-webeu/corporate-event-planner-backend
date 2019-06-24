@@ -7,6 +7,11 @@ const errorMessage = {
   invalidCredentials: { errorMessage: 'Invalid credentials.' },
   loginUnsuccessful: { errorMessage: 'Login Unsuccessful.' },
   failedDuplicateCheck: { errorMessage: 'There was an error while checking for duplicates.' },
+  usersNotRetrieved: { errorMessage: 'The users could not be retrieved.' },
+  userNotRetrieved: { errorMessage: 'The user information could not be retrieved.' },
+  userNotFound: { errorMessage: 'The user with the specified ID does not exist.' },
+  userNotRemoved: { errorMessage: 'The user could not be removed.' },
+  userNotUpdated: { errorMessage: 'The user information could not be modified.' },
 };
 
 module.exports = errorMessage;
