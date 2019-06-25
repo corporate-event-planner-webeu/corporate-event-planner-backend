@@ -126,3 +126,25 @@ router.delete('/:id', (req, res) => {
         res.status(500).json(errorMessage.eventNotDeleted);
       });
 });
+
+// [PUT] event by id
+// will require restricted middleware
+router.put('/:id', restricted, async (req, res) => {
+  const { id } = req.params;
+  const event = req.body;
+  const user_id = req.decoded.subject;
+  try {
+    const data = await Events.updateEvent(event, id);
+    if (!data) {
+      res.status(404).json(errorMessage.eventNotFound);
+    } else {
+      const updatedEvent = { ...event, id: Number(id), user_id };
+      res.status(200).json(updatedEvent);
+    }
+  } catch (error) {
+    res.status(500).json(errorMessage.eventNotUpdated);
+  }
+});
+
+module.exports = router;
+
