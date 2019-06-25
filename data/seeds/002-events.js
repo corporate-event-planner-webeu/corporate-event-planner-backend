@@ -8,6 +8,7 @@ exports.seed = function(knex, Promise) {
         {
           event_title: 'Monthly Meetup',
           event_description: 'A monthly meetup',
+          image_url: 'https://picsum.photos/id/237/200/300',
           event_date: '22-09-2019',
           event_time: '16:00 PM',
           attendees: 'Michael Morrison',
@@ -17,6 +18,7 @@ exports.seed = function(knex, Promise) {
         {
           event_title: 'Tech Conference',
           event_description: 'a great tech conference',
+          image_url: 'https://picsum.photos/id/237/200/300',
           event_date: '25-08-2019',
           event_time: '10:00 PM',
           attendees: 'Michael Morrison',
@@ -26,6 +28,7 @@ exports.seed = function(knex, Promise) {
         {
           event_title: 'Negotiations Skills',
           event_description: 'a session on negotiation',
+          image_url: 'https://picsum.photos/id/237/200/300',
           event_date: '20-08-2019',
           event_time: '12:00 PM',
           attendees: 'Michael Morrison',
