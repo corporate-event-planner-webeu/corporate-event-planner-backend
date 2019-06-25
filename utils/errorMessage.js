@@ -12,6 +12,18 @@ const errorMessage = {
   userNotFound: { errorMessage: 'The user with the specified ID does not exist.' },
   userNotRemoved: { errorMessage: 'The user could not be removed.' },
   userNotUpdated: { errorMessage: 'The user information could not be modified.' },
+  eventsNotFound: { errorMessage: 'The user with the specified ID does not have any events.' },
+  eventsNotRetrieved: { errorMessage: 'The user events could not be retrieved.' },
+  eventNotFound: { errorMessage: 'The event with the specified ID does not exist.' },
+  eventNotRetrieved: { errorMessage: 'The event information could not be retrieved.' },
+  missingEventInfo: { errorMessage: 'Please provide information for the event.' },
+  eventNotAdded: { errorMessage: 'There was an error while saving the post to the database.' },
+  eventNotDeleted: { errorMessage: 'The event could not be removed' },
+  eventNotUpdated: { errorMessage: 'The event information could not be modified' },
+  tasksNotFound: { errorMessage: 'The event with the specified ID does not have any tasks.' },
+  tasksNotRetrieved: { errorMessage: 'The tasks information could not be retrieved.' },
+  taskNotFound: { errorMessage: 'The task with the specified ID does not exist.' },
+  taskNotRetrieved: { errorMessage: 'The task information could not be retrieved.' },
 };
 
 module.exports = errorMessage;
