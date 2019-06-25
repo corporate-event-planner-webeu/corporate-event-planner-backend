@@ -92,4 +92,22 @@ router.delete('/:id', (req, res) => {
       });
 });
 
+// [PUT] task by id
+// will require restricted middleware
+router.put('/:id', restricted, async (req, res) => {
+  const { id } = req.params;
+  const task = req.body;
+  const user_id = req.decoded.subject;
+  try {
+    const data = await Tasks.updateTask(task, id);
+    if (!data) {
+      res.status(404).json(errorMessage.taskNotFound);
+    } else {
+      const updatedTask = { ...task, id: Number(id), user_id };
+      res.status(200).json(updatedTask);
+    }
+  } catch (error) {
+    res.status(500).json(errorMessage.taskNotUpdated);
+  }
+});
 module.exports = router;

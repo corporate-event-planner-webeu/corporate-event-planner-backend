@@ -27,5 +27,5 @@ module.exports = {
   getTasksForEvent,
   addTask,
   deleteTask,
-  updateTask
+  updateTask,
 };
