@@ -9,7 +9,6 @@ const getEventById = id => db('events')
 const getEventsFromUser = id => db('events').where({ user_id: id });
 
 const addEvent = event => db('events')
-    .where({event_id: id })
     .insert(event)
     .then(ids => getEventById(ids[0]));
 
