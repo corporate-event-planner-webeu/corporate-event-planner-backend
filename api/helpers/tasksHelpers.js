@@ -13,7 +13,7 @@ const addTask = (task) => db('tasks')
     .insert(task)
     .then(ids => getTaskById(ids[0]));
 
-const deleteTask = id => db('task')
+const deleteTask = id => db('tasks')
     .where({ id })
     .del();
 
@@ -21,11 +21,80 @@ const updateTask = (task, id) => db('tasks')
     .where({ id })
     .update(task);
 
+const markAsCompleted = (task, id) => db('tasks')
+    .where({ id })
+    .update(task);
+
+const markAsPending = (task, id) => db('tasks')
+    .where({ id })
+
+    .update(task)
+    .then(ids => getTaskById(ids[0]));
+
+
+const notUndefined = (value) => value !== undefined;
+
+const verifyAndCleanTask = (taskName, taskCompleted, eventId) => {
+  if (!taskName && !notUndefined(taskCompleted) && !eventId) {
+    throw new Error('Invalid task');
+  }
+
+  if (!notUndefined(taskCompleted) && !taskName) {
+    return {
+      event_id: eventId,
+    };
+  }
+
+  if (!notUndefined(taskCompleted) && !eventId) {
+    return {
+      task_name: taskName,
+    };
+  }
+
+  if (!taskName && !eventId) {
+    return {
+      task_completed: taskCompleted,
+    };
+  }
+
+  if (!taskName) {
+    return {
+      task_completed: taskCompleted,
+      event_id: eventId,
+    };
+  }
+
+  if (!eventId) {
+    return {
+      task_completed: taskCompleted,
+      task_name: taskName,
+    };
+  }
+
+  if (!notUndefined(taskCompleted)) {
+    return {
+      task_name: taskName,
+      event_id: eventId,
+    };
+  }
+
+  return {
+    task_name: taskName,
+    task_completed: taskCompleted,
+    event_id: eventId,
+  };
+};
+
 module.exports = {
   getTasks,
   getTaskById,
   getTasksForEvent,
   addTask,
   deleteTask,
-  updateTask
+  updateTask,
+  markAsCompleted,
+  markAsPending,
+  notUndefined,
+  verifyAndCleanTask,
+
 };

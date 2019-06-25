@@ -24,6 +24,8 @@ const errorMessage = {
   tasksNotRetrieved: { errorMessage: 'The tasks information could not be retrieved.' },
   taskNotFound: { errorMessage: 'The task with the specified ID does not exist.' },
   taskNotRetrieved: { errorMessage: 'The task information could not be retrieved.' },
+  taskNotRemoved: { errorMessage: 'The task could not be removed.' },
+  taskNotUpdated: { errorMessage: 'The task could not be updated.' },
 };
 
 module.exports = errorMessage;

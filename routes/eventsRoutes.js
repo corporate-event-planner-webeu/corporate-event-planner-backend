@@ -139,7 +139,7 @@ router.put('/:id', restricted, async (req, res) => {
     if (!data) {
       res.status(404).json(errorMessage.eventNotFound);
     } else {
-      const updatedEvent = { ...event, id: Number(id), user_id };
+      const updatedEvent = { ...event, id: Number(id), user_id, task_completed: Boolean(event.task_completed) };
       res.status(200).json(updatedEvent);
     }
   } catch (error) {
