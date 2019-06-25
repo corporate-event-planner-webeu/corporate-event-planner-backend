@@ -52,7 +52,38 @@ router.get('/', (req, res) => {
 //       });
 // });
 
-// [GET] event by id with tasks
+// // [GET] event by id with tasks
+// router.get('/:id', (req, res) => {
+//   const {id} = req.params;
+//   db('events')
+//       .where({id: id})
+//       .first()
+//       .then((event) => {
+//         if (!event) {
+//           res.status(404).json(errorMessage.eventNotFound);
+//         } else {
+//           db('tasks')
+//               .where({event_id: id})
+//               .select('id', 'task_name', 'task_completed')
+//               .then((tasks => {
+//                 const tasksWithCompletedBooleans = tasks.map(task => ({
+//                   ...task,
+//                   task_completed: Boolean(task.task_completed)
+//                 }));
+//                 const eventWithTasks = {
+//                   ...event,
+//                   tasks: tasksWithCompletedBooleans
+//                 };
+//                 res.status(200).json(eventWithTasks);
+//               }));
+//         }
+//       })
+//       .catch((error) => {
+//         res.status(500).json(errorMessage.eventNotRetrieved);
+//       });
+// });
+
+// [GET] event by id with tasks and items
 router.get('/:id', (req, res) => {
   const {id} = req.params;
   db('events')
@@ -65,17 +96,23 @@ router.get('/:id', (req, res) => {
           db('tasks')
               .where({event_id: id})
               .select('id', 'task_name', 'task_completed')
-              .then((tasks => {
-                const tasksWithCompletedBooleans = tasks.map(task => ({
-                  ...task,
-                  task_completed: Boolean(task.task_completed)
+              .then((eventTasks => {
+                const tasks = eventTasks.map(eventTask => ({
+                  ...eventTask,
+                  task_completed: Boolean(eventTask.task_completed)
                 }));
-                const eventWithActions = {
-                  ...event,
-                  tasks: tasksWithCompletedBooleans
-                };
-                res.status(200).json(eventWithActions);
-              }));
+                db('shopping_list')
+                    .where({event_id: id})
+                    .select('id', 'item_name', 'item_acquired')
+                    .then((eventItems => {
+                      const items = eventItems.map(eventItem => ({
+                        ...eventItem,
+                        item_acquired: Boolean(eventItem.item_acquired)
+                      }));
+                      const eventWithTasksAndItems = {...event, tasks, items};
+                      res.status(200).json(eventWithTasksAndItems);
+                    }));
+              }))
         }
       })
       .catch((error) => {
