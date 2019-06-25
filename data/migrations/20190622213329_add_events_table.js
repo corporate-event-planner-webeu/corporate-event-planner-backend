@@ -8,7 +8,9 @@ exports.up = function(knex, Promise) {
     tbl
         .string('event_description', 255);
     tbl
-        .timestamp(true, true);
+        .string('image_url', 255);
+    tbl
+        .timestamp('created_at');
     tbl
         .date('event_date');
     tbl
