@@ -109,3 +109,20 @@ router.post('/', restricted, (req, res) => {
         res.status(500).json(errorMessage.eventNotAdded);
       });
 });
+
+// [DELETE] event by id
+// will require restricted middleware
+router.delete('/:id', (req, res) => {
+  const { id } = req.params;
+  Events.deleteEvent(id)
+      .then((data) => {
+        if (!data) {
+          res.status(404).json(errorMessage.eventNotFound);
+        } else {
+          res.status(200).json(responseMessage.deleteEvent);
+        }
+      })
+      .catch((error) => {
+        res.status(500).json(errorMessage.eventNotDeleted);
+      });
+});
