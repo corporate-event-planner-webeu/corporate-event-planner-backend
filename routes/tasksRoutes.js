@@ -35,3 +35,19 @@ router.get('/', (req, res) => {
         });
   }
 });
+
+//[GET] Task by id
+router.get('/:id', (req, res) => {
+  const { id } = req.params;
+  Tasks.getTaskById(id)
+      .then((task) => {
+        if (!task) {
+          res.status(404).json(errorMessage.taskNotFound);
+        } else {
+          res.status(200).json(task);
+        }
+      })
+      .catch((error) => {
+        res.status(500).json(errorMessage.taskNotRetrieved);
+      });
+});
