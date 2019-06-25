@@ -82,3 +82,30 @@ router.get('/:id', (req, res) => {
         res.status(500).json(errorMessage.eventNotRetrieved);
       });
 });
+
+
+// [POST] event
+// will need restricted middleware
+router.post('/', restricted, (req, res) => {
+  const {
+    event_title, event_description, event_date, event_time, attendees, budget,
+  } = req.body;
+  const user_id = req.decoded.subject;
+  if (!event_title || !user_id) {
+    res.status(400).json(errorMessage.missingEventInfo);
+  }
+  Events.addEvent({
+    user_id,
+    event_description,
+    event_date,
+    event_time,
+    attendees,
+    budget,
+  })
+      .then((newEvent) => {
+        res.status(201).json({ ...newEvent, completed: Boolean(newEvent.completed), tasks: [], shopping_list: [], vendors: []});
+      })
+      .catch((error) => {
+        res.status(500).json(errorMessage.eventNotAdded);
+      });
+});
