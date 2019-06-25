@@ -12,10 +12,12 @@ const path = require('../utils/path');
 const auth = require('../routes/authRoutes');
 const users = require('../routes/usersRoutes');
 const events = require('../routes/eventsRoutes');
+const tasks = require('../routes/tasksRoutes');
 
 server.use(path.auth, auth);
 server.use(path.users, users);
 server.use(path.events, events);
+server.use(path.tasks, tasks);
 
 server.get('/api', (req, res) => {
   res.status(200).json({ data: 'The server is up and running!' });
