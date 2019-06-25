@@ -95,6 +95,7 @@ router.post('/', restricted, (req, res) => {
     res.status(400).json(errorMessage.missingEventInfo);
   }
   Events.addEvent({
+    event_title,
     user_id,
     event_description,
     event_date,
