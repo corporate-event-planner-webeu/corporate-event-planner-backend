@@ -27,7 +27,63 @@ const markAsCompleted = (task, id) => db('tasks')
 
 const markAsPending = (task, id) => db('tasks')
     .where({ id })
-    .update(task);
+
+    .update(task)
+    .then(ids => getTaskById(ids[0]));
+
+
+const notUndefined = (value) => value !== undefined;
+
+const verifyAndCleanTask = (taskName, taskCompleted, eventId) => {
+  if (!taskName && !notUndefined(taskCompleted) && !eventId) {
+    throw new Error('Invalid task');
+  }
+
+  if (!notUndefined(taskCompleted) && !taskName) {
+    return {
+      event_id: eventId,
+    };
+  }
+
+  if (!notUndefined(taskCompleted) && !eventId) {
+    return {
+      task_name: taskName,
+    };
+  }
+
+  if (!taskName && !eventId) {
+    return {
+      task_completed: taskCompleted,
+    };
+  }
+
+  if (!taskName) {
+    return {
+      task_completed: taskCompleted,
+      event_id: eventId,
+    };
+  }
+
+  if (!eventId) {
+    return {
+      task_completed: taskCompleted,
+      task_name: taskName,
+    };
+  }
+
+  if (!notUndefined(taskCompleted)) {
+    return {
+      task_name: taskName,
+      event_id: eventId,
+    };
+  }
+
+  return {
+    task_name: taskName,
+    task_completed: taskCompleted,
+    event_id: eventId,
+  };
+};
 
 module.exports = {
   getTasks,
@@ -37,5 +93,8 @@ module.exports = {
   deleteTask,
   updateTask,
   markAsCompleted,
-  markAsPending
+  markAsPending,
+  notUndefined,
+  verifyAndCleanTask,
+
 };
