@@ -21,6 +21,14 @@ const updateTask = (task, id) => db('tasks')
     .where({ id })
     .update(task);
 
+const markAsCompleted = (task, id) => db('tasks')
+    .where({ id })
+    .update(task);
+
+const markAsPending = (task, id) => db('tasks')
+    .where({ id })
+    .update(task);
+
 module.exports = {
   getTasks,
   getTaskById,
@@ -28,4 +36,6 @@ module.exports = {
   addTask,
   deleteTask,
   updateTask,
+  markAsCompleted,
+  markAsPending
 };

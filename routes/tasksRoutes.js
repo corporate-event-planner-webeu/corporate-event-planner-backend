@@ -110,4 +110,43 @@ router.put('/:id', restricted, async (req, res) => {
     res.status(500).json(errorMessage.taskNotUpdated);
   }
 });
+
+// [PUT] mark task as completed
+// will require restricted middleware
+router.put('/:id/complete', restricted, async (req, res) => {
+  const { id } = req.params;
+  const task = req.body;
+  const user_id = req.decoded.subject;
+  try {
+    const data = await Tasks.markAsCompleted(task, id);
+    if (!data) {
+      res.status(404).json(errorMessage.taskNotFound);
+    } else {
+      const updatedTask = { ...task, task_completed: true, id: Number(id), user_id };
+      res.status(200).json(updatedTask);
+    }
+  } catch (error) {
+    res.status(500).json(errorMessage.taskNotUpdated);
+  }
+});
+
+// [PUT] mark task as pending
+// will require restricted middleware
+router.put('/:id/pending', restricted, async (req, res) => {
+  const { id } = req.params;
+  const task = req.body;
+  const user_id = req.decoded.subject;
+  try {
+    const data = await Tasks.markAsPending(task, id);
+    if (!data) {
+      res.status(404).json(errorMessage.taskNotFound);
+    } else {
+      const updatedTask = { ...task, task_completed: false, id: Number(id), user_id };
+      res.status(200).json(updatedTask);
+    }
+  } catch (error) {
+    res.status(500).json(errorMessage.taskNotUpdated);
+  }
+});
+
 module.exports = router;
