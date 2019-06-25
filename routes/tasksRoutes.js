@@ -76,4 +76,20 @@ router.post('/', restricted, (req, res) => {
   }
 });
 
+//[DELETE] a task
+router.delete('/:id', (req, res) => {
+  const {id} = req.params;
+  Tasks.deleteTask(id)
+      .then((data) => {
+        if (!data) {
+          res.status(404).json(errorMessage.taskNotFound);
+        } else {
+          res.status(200).json(responseMessage.deleteTask);
+        }
+      })
+      .catch((error) => {
+        res.status(500).json(errorMessage.taskNotRemoved);
+      });
+});
+
 module.exports = router;

@@ -13,7 +13,7 @@ const addTask = (task) => db('tasks')
     .insert(task)
     .then(ids => getTaskById(ids[0]));
 
-const deleteTask = id => db('task')
+const deleteTask = id => db('tasks')
     .where({ id })
     .del();
 
