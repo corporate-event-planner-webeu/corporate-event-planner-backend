@@ -44,7 +44,7 @@ router.get('/:id', (req, res) => {
         if (!task) {
           res.status(404).json(errorMessage.taskNotFound);
         } else {
-          res.status(200).json(task);
+          res.status(200).json({ ...task, task_completed: Boolean(task.task_completed) });
         }
       })
       .catch((error) => {
@@ -96,53 +96,15 @@ router.delete('/:id', (req, res) => {
 // will require restricted middleware
 router.put('/:id', restricted, async (req, res) => {
   const { id } = req.params;
-  const task = req.body;
+  const { task_name, task_completed, event_id } = req.body;
   const user_id = req.decoded.subject;
   try {
-    const data = await Tasks.updateTask(task, id);
+    const updatedTask = Tasks.verifyAndCleanTask(task_name, task_completed, event_id);
+    const data = await Tasks.updateTask(updatedTask, id);
     if (!data) {
       res.status(404).json(errorMessage.taskNotFound);
     } else {
-      const updatedTask = { ...task, id: Number(id), user_id };
-      res.status(200).json(updatedTask);
-    }
-  } catch (error) {
-    res.status(500).json(errorMessage.taskNotUpdated);
-  }
-});
-
-// [PUT] mark task as completed
-// will require restricted middleware
-router.put('/:id/complete', restricted, async (req, res) => {
-  const { id } = req.params;
-  const task = req.body;
-  const user_id = req.decoded.subject;
-  try {
-    const data = await Tasks.markAsCompleted(task, id);
-    if (!data) {
-      res.status(404).json(errorMessage.taskNotFound);
-    } else {
-      const updatedTask = { ...task, task_completed: true, id: Number(id), user_id };
-      res.status(200).json(updatedTask);
-    }
-  } catch (error) {
-    res.status(500).json(errorMessage.taskNotUpdated);
-  }
-});
-
-// [PUT] mark task as pending
-// will require restricted middleware
-router.put('/:id/pending', restricted, async (req, res) => {
-  const { id } = req.params;
-  const task = req.body;
-  const user_id = req.decoded.subject;
-  try {
-    const data = await Tasks.markAsPending(task, id);
-    if (!data) {
-      res.status(404).json(errorMessage.taskNotFound);
-    } else {
-      const updatedTask = { ...task, task_completed: false, id: Number(id), user_id };
-      res.status(200).json(updatedTask);
+      res.status(200).json({ success: true, ...updatedTask });
     }
   } catch (error) {
     res.status(500).json(errorMessage.taskNotUpdated);
