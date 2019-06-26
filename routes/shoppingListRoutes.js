@@ -51,3 +51,28 @@ router.get('/:id', (req, res) => {
         res.status(500).json(errorMessage.itemNotRetrieved);
       });
 });
+
+// [POST] an item
+// will need restricted middleware
+router.post('/', restricted, (req, res) => {
+  const { item_name, item_acquired, item_price } = req.body;
+  const event_id = req.query.event_id;
+  const user_id = req.decoded.subject;
+  if (!item_name || !user_id || !event_id || !item_price) {
+    res.status(400).json(errorMessage.missingItemInfo);
+  } else {
+    db('shopping_list')
+        .insert({ item_name, item_acquired, event_id, item_price })
+        .then(arrayOfIds => {
+          return db('shopping_list').where({id: arrayOfIds[0]})
+              .then(arrayOfItems => {
+                res.status(201).json({...arrayOfItems[0], item_acquired: Boolean(arrayOfItems[0].item_acquired)})
+              })
+              .catch(error => {
+                res.status(500).json(errorMessage.itemNotCreated);
+              });
+
+        });
+  }
+});
+
