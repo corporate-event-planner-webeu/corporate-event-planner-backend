@@ -35,3 +35,19 @@ router.get('/', (req, res) => {
         });
   }
 });
+
+//[GET] item by id
+router.get('/:id', (req, res) => {
+  const { id } = req.params;
+  ShoppingList.getItemById(id)
+      .then((item) => {
+        if (!item) {
+          res.status(404).json(errorMessage.itemNotFound);
+        } else {
+          res.status(200).json({ ...item, item_acquired: Boolean(item.item_acquired) });
+        }
+      })
+      .catch((error) => {
+        res.status(500).json(errorMessage.itemNotRetrieved);
+      });
+});
