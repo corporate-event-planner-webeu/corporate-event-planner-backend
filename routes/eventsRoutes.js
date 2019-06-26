@@ -124,7 +124,7 @@ router.get('/:id', restricted, (req, res) => {
 // [POST] event
 router.post('/', restricted, (req, res) => {
   const {
-    event_title, event_description, event_date, event_time, attendees, budget,
+    event_title, event_description, image_url, event_date, event_time, attendees, budget,
   } = req.body;
   const user_id = req.decoded.subject;
   if (!event_title || !user_id) {
@@ -134,6 +134,7 @@ router.post('/', restricted, (req, res) => {
     event_title,
     user_id,
     event_description,
+    image_url,
     event_date,
     event_time,
     attendees,
