@@ -52,3 +52,26 @@ router.get('/:id', (req, res) => {
       });
 });
 
+// [POST] a vendor
+// will need restricted middleware
+router.post('/', restricted, (req, res) => {
+  const { vendor_name, contact_number, contact_email } = req.body;
+  const event_id = req.query.event_id;
+  const user_id = req.decoded.subject;
+  if (!vendor_name || !user_id || !event_id) {
+    res.status(400).json(errorMessage.missingVendorInfo);
+  } else {
+    db('vendors')
+        .insert({ vendor_name, contact_number, event_id, contact_email })
+        .then(arrayOfIds => {
+          return db('vendors').where({id: arrayOfIds[0]})
+              .then(arrayOfItems => {
+                res.status(201).json(arrayOfItems[0])
+              })
+              .catch(error => {
+                res.status(500).json(errorMessage.vendorNotCreated);
+              });
+
+        });
+  }
+});
