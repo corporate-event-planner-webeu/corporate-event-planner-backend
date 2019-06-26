@@ -12,7 +12,7 @@ const Events = require('../api/helpers/eventsHelpers');
 const Users = require('../api/helpers/usersHelpers');
 
 // [GET] events from user
-router.get('/', (req, res) => {
+router.get('/', restricted, (req, res) => {
   if (req.query && req.query.user_id) {
     Events.getEventsFromUser(req.query.user_id)
         .then((events) => {
@@ -84,7 +84,7 @@ router.get('/', (req, res) => {
 // });
 
 // [GET] event by id with tasks and items
-router.get('/:id', (req, res) => {
+router.get('/:id', restricted, (req, res) => {
   const {id} = req.params;
   db('events')
       .where({id: id})
@@ -122,7 +122,6 @@ router.get('/:id', (req, res) => {
 
 
 // [POST] event
-// will need restricted middleware
 router.post('/', restricted, (req, res) => {
   const {
     event_title, event_description, event_date, event_time, attendees, budget,
@@ -149,8 +148,7 @@ router.post('/', restricted, (req, res) => {
 });
 
 // [DELETE] event by id
-// will require restricted middleware
-router.delete('/:id', (req, res) => {
+router.delete('/:id', restricted, (req, res) => {
   const { id } = req.params;
   Events.deleteEvent(id)
       .then((data) => {
@@ -166,7 +164,6 @@ router.delete('/:id', (req, res) => {
 });
 
 // [PUT] event by id
-// will require restricted middleware
 router.put('/:id', restricted, async (req, res) => {
   const { id } = req.params;
   const event = req.body;
@@ -176,7 +173,7 @@ router.put('/:id', restricted, async (req, res) => {
     if (!data) {
       res.status(404).json(errorMessage.eventNotFound);
     } else {
-      const updatedEvent = { ...event, id: Number(id), user_id, task_completed: Boolean(event.task_completed) };
+      const updatedEvent = { ...event, id: Number(id), user_id, event_completed: Boolean(event.event_completed) };
       res.status(200).json(updatedEvent);
     }
   } catch (error) {

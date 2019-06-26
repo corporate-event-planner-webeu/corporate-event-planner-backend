@@ -12,7 +12,7 @@ const ShoppingList = require('../api/helpers/shoppingListHelpers');
 const Events = require('../api/helpers/eventsHelpers');
 
 // [GET] shopping list for event
-router.get('/', (req, res) => {
+router.get('/', restricted, (req, res) => {
   if (req.query && req.query.event_id) {
     ShoppingList.getShoppingListForEvent(req.query.event_id)
         .then((items) => {
@@ -37,7 +37,7 @@ router.get('/', (req, res) => {
 });
 
 //[GET] item by id
-router.get('/:id', (req, res) => {
+router.get('/:id', restricted, (req, res) => {
   const { id } = req.params;
   ShoppingList.getItemById(id)
       .then((item) => {
@@ -53,7 +53,6 @@ router.get('/:id', (req, res) => {
 });
 
 // [POST] an item
-// will need restricted middleware
 router.post('/', restricted, (req, res) => {
   const { item_name, item_acquired, item_price } = req.body;
   const event_id = req.query.event_id;
@@ -93,7 +92,6 @@ router.delete('/:id', restricted, (req, res) => {
 });
 
 // [PUT] item by id
-// will require restricted middleware
 router.put('/:id', restricted, async (req, res) => {
   const { id } = req.params;
   const { item_name, item_acquired, event_id, price_list } = req.body;

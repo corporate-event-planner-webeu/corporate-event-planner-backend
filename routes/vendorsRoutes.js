@@ -12,7 +12,7 @@ const Vendors = require('../api/helpers/vendorsHelpers');
 const Events = require('../api/helpers/eventsHelpers');
 
 // [GET] vendors for event
-router.get('/', (req, res) => {
+router.get('/', restricted, (req, res) => {
   if (req.query && req.query.event_id) {
     Vendors.getVendorsForEvent(req.query.event_id)
         .then((vendors) => {
@@ -37,7 +37,7 @@ router.get('/', (req, res) => {
 });
 
 //[GET] vendor by id
-router.get('/:id', (req, res) => {
+router.get('/:id', restricted, (req, res) => {
   const { id } = req.params;
   Vendors.getVendorById(id)
       .then((vendor) => {
@@ -53,7 +53,6 @@ router.get('/:id', (req, res) => {
 });
 
 // [POST] a vendor
-// will need restricted middleware
 router.post('/', restricted, (req, res) => {
   const { vendor_name, contact_number, contact_email } = req.body;
   const event_id = req.query.event_id;
@@ -93,7 +92,6 @@ router.delete('/:id', restricted, (req, res) => {
 });
 
 // [PUT] vendor by id
-// will require restricted middleware
 router.put('/:id', restricted, async (req, res) => {
   const { id } = req.params;
   const { vendor_name, contact_number, event_id, contact_email } = req.body;
