@@ -20,7 +20,8 @@ exports.up = function(knex, Promise) {
       .notNullable();
     tbl
       .string('role', 255)
-      .notNullable();
+      .notNullable()
+      .defaultTo('admin');
   });
 };
 

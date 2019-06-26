@@ -149,7 +149,7 @@
         "attendees": 15,
         "budget": 600,
         "user_id": 2,
-        "completed": false
+        "completed": 0
     },
     {
         "id": 3,
@@ -161,7 +161,7 @@
         "attendees": 10,
         "budget": 600,
         "user_id": 3,
-        "completed": false
+        "completed": 0
     },
     {
         "id": 4,
@@ -173,7 +173,7 @@
         "attendees": 25,
         "budget": 200,
         "user_id": 4,
-        "completed": false
+        "completed": 0
     },
 ]
 ```
@@ -204,7 +204,7 @@
     "attendees": 15,
     "budget": 600,
     "user_id": 2,
-    "completed": false,
+    "completed": 0,
     "tasks": [
         {
             "id": 2,
@@ -258,7 +258,7 @@
            "attendees": 15,
            "budget": 600,
            "user_id": 2,
-           "completed": false
+           "completed": 0
        }
    ]
 ```
@@ -409,13 +409,13 @@
         "id": 1,
         "task_name": "reserve seats",
         "event_id": 1,
-        "task_completed": true
+        "task_completed": 0
     },
     {
         "id": 2,
         "task_name": "order food",
         "event_id": 2,
-        "task_completed": false
+        "task_completed": 1
     },
 ]
 
@@ -448,9 +448,33 @@
         "id": 11,
         "task_name": "Practice speech",
         "event_id": 2,
-        "task_completed": false
+        "task_completed": 0
     }
 ]
+```
+
+### Get task by id
+
+*method url*: `/api/tasks/:id`
+
+*http method*: **[GET]**
+
+#### Headers
+
+| name           | type   | required | description              |
+| -------------- | ------ | -------- | ------------------------ |
+| `Authorization`| String | Yes      | token to Authorize request  |
+
+#### Response
+##### Example response
+
+```
+    {
+        "id": 2,
+        "task_name": "Another task",
+        "event_id": 2,
+        "task_completed": false
+    },
 ```
 
 ### Create a task for an event
@@ -551,13 +575,14 @@
 
 ```
 {
+    "success": true
     "task_name": "Read speech",
-    "task_completed": false,
+    "task_completed": true,
     "id": 2,
     "event_id": 4
 }
 ```
-
+## Shopping list
 ### Get shopping list items for event
 
 *method url*: `/api/events/?event_id={event_id}`
@@ -579,14 +604,14 @@
         "item_name": "Water bottles",
         "event_id": 2,
         "item_price": 150,
-        "item_acquired": true
+        "item_acquired": 1
     },
     {
         "id": 4,
         "item_name": "Cake",
         "event_id": 2,
         "item_price": null,
-        "item_acquired": false
+        "item_acquired": 0
     }
 ]
 ```
@@ -611,7 +636,7 @@
         "item_name": "Water bottles",
         "event_id": 2,
         "item_price": 150,
-        "item_acquired": true
+        "item_acquired": 1
     }
 ```
 

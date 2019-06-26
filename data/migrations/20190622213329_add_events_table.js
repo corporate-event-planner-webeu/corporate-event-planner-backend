@@ -8,15 +8,13 @@ exports.up = function(knex, Promise) {
     tbl
         .string('event_description', 255);
     tbl
-        .string('image_url', 255);
+        .string('image_url', 255).defaultTo('');
     tbl
-        .timestamp('created_at');
+        .date('event_date').defaultTo('');
     tbl
-        .date('event_date');
+        .time('event_time').defaultTo('');
     tbl
-        .time('event_time');
-    tbl
-        .string('attendees', 255);
+        .integer('attendees', 255);
     tbl
         .integer('budget');
     tbl
