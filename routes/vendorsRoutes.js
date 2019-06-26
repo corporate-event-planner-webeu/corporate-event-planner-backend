@@ -75,3 +75,19 @@ router.post('/', restricted, (req, res) => {
         });
   }
 });
+
+//[DELETE] a vendor
+router.delete('/:id', restricted, (req, res) => {
+  const {id} = req.params;
+  Vendors.deleteVendor(id)
+      .then((data) => {
+        if (!data) {
+          res.status(404).json(errorMessage.vendorNotFound);
+        } else {
+          res.status(200).json(responseMessage.deleteVendor);
+        }
+      })
+      .catch((error) => {
+        res.status(500).json(errorMessage.vendorNotRemoved);
+      });
+});
