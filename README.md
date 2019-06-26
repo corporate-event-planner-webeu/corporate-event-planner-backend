@@ -419,3 +419,69 @@ Example response
 }
 ```
 
+
+Get item from shopping list by id
+
+Example response
+```
+{
+       "id": 1,
+       "item_name": "Water bottles",
+       "event_id": 1,
+       "item_price": 150,
+       "item_acquired": true
+   }
+```
+
+Add an item to the shopping list
+
+Example request
+
+```
+{
+	"item_name": "buy cake",
+	"item_acquired": false,
+	"item_price": 40
+}
+```
+
+Example response
+```
+{
+    "id": 5,
+    "item_name": "buy cake",
+    "event_id": 2,
+    "item_price": 40,
+    "item_acquired": false
+}
+```
+
+Delete an item from the shopping list
+
+Example response
+```
+{
+    "message": "The item has now been removed from the database."
+}
+```
+
+Update an item
+
+Example request
+
+```
+{
+    "item_acquired": true,
+    "item_name": "another item"
+}
+```
+
+Example response
+
+```
+{
+    "success": true,
+    "item_acquired": true,
+    "item_name": "another item"
+}
+```
