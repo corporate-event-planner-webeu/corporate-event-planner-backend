@@ -76,3 +76,19 @@ router.post('/', restricted, (req, res) => {
   }
 });
 
+//[DELETE] an item
+router.delete('/:id', restricted, (req, res) => {
+  const {id} = req.params;
+  ShoppingList.deleteItem(id)
+      .then((data) => {
+        if (!data) {
+          res.status(404).json(errorMessage.itemNotFound);
+        } else {
+          res.status(200).json(responseMessage.deleteItem);
+        }
+      })
+      .catch((error) => {
+        res.status(500).json(errorMessage.itemNotRemoved);
+      });
+});
+
