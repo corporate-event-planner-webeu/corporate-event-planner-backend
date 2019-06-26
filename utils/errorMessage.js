@@ -26,6 +26,22 @@ const errorMessage = {
   taskNotRetrieved: { errorMessage: 'The task information could not be retrieved.' },
   taskNotRemoved: { errorMessage: 'The task could not be removed.' },
   taskNotUpdated: { errorMessage: 'The task could not be updated.' },
+  shoppingListNotFound: { errorMessage: 'The shopping list could not be found.' },
+  shoppingListNotRetrieved: { errorMessage: 'The task could not be retrieved.' },
+  itemNotFound: { errorMessage: 'The item could not be found.' },
+  itemNotRetrieved: { errorMessage: 'The item could not be retrieved.' },
+  missingItemInfo: { errorMessage: 'Missing required information.' },
+  itemNotCreated: { errorMessage: 'The item could not be created.' },
+  itemNotRemoved: { errorMessage: 'The item could not be removed' },
+  itemNotUpdated: { errorMessage: 'The item could not be updated.' },
+  vendorsNotFound: { errorMessage: 'The vendor could not be found.' },
+  vendorsNotRetrieved: { errorMessage: 'The vendors information could not be retrieved.' },
+  vendorNotFound: { errorMessage: 'The vendor could not be found.' },
+  vendorNotRetrieved: { errorMessage: 'The vendor information could not be retrieved.' },
+  missingVendorInfo: { errorMessage: 'Missing required information.' },
+  vendorNotCreated: { errorMessage: 'The vendor could not be created.' },
+  vendorNotRemoved: { errorMessage: 'The vendor could not be removed.' },
+  vendorNotUpdated: { errorMessage: 'The vendor could not be updated.' },
 };
 
 module.exports = errorMessage;
