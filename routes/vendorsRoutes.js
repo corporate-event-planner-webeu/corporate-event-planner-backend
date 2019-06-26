@@ -36,3 +36,19 @@ router.get('/', (req, res) => {
   }
 });
 
+//[GET] vendor by id
+router.get('/:id', (req, res) => {
+  const { id } = req.params;
+  Vendors.getVendorById(id)
+      .then((vendor) => {
+        if (!vendor) {
+          res.status(404).json(errorMessage.vendorNotFound);
+        } else {
+          res.status(200).json(vendor);
+        }
+      })
+      .catch((error) => {
+        res.status(500).json(errorMessage.vendorNotRetrieved);
+      });
+});
+
