@@ -91,3 +91,24 @@ router.delete('/:id', restricted, (req, res) => {
         res.status(500).json(errorMessage.vendorNotRemoved);
       });
 });
+
+// [PUT] vendor by id
+// will require restricted middleware
+router.put('/:id', restricted, async (req, res) => {
+  const { id } = req.params;
+  const { vendor_name, contact_number, event_id, contact_email } = req.body;
+  const user_id = req.decoded.subject;
+  try {
+    const updatedVendor = Vendors.verifyAndCleanVendor(vendor_name, contact_number, event_id, contact_email);
+    const data = await Vendors.updateVendor(updatedVendor, id);
+    if (!data) {
+      res.status(404).json(errorMessage.vendorNotFound);
+    } else {
+      res.status(200).json({ success: true, ...updatedVendor });
+    }
+  } catch (error) {
+    res.status(500).json(errorMessage.vendorNotUpdated);
+  }
+});
+
+module.exports = router;
