@@ -10,7 +10,6 @@ exports.up = function(knex, Promise) {
     tbl
         .string('image_url', 255).defaultTo('');
     tbl
-        .timestamp('created_at');
         .date('event_date').defaultTo('');
     tbl
         .time('event_time').defaultTo('');
