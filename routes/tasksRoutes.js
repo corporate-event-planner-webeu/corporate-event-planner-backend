@@ -12,7 +12,7 @@ const Events = require('../api/helpers/eventsHelpers');
 const Tasks = require('../api/helpers/tasksHelpers');
 
 // [GET] tasks for event
-router.get('/', (req, res) => {
+router.get('/', restricted, (req, res) => {
   if (req.query && req.query.event_id) {
     Tasks.getTasksForEvent(req.query.event_id)
         .then((tasks) => {
@@ -37,7 +37,7 @@ router.get('/', (req, res) => {
 });
 
 //[GET] Task by id
-router.get('/:id', (req, res) => {
+router.get('/:id', restricted, (req, res) => {
   const { id } = req.params;
   Tasks.getTaskById(id)
       .then((task) => {
@@ -53,7 +53,6 @@ router.get('/:id', (req, res) => {
 });
 
 // [POST] a task
-// will need restricted middleware
 router.post('/', restricted, (req, res) => {
   const { task_name, task_completed } = req.body;
   const event_id = req.query.event_id;
@@ -77,7 +76,7 @@ router.post('/', restricted, (req, res) => {
 });
 
 //[DELETE] a task
-router.delete('/:id', (req, res) => {
+router.delete('/:id', restricted, (req, res) => {
   const {id} = req.params;
   Tasks.deleteTask(id)
       .then((data) => {
@@ -93,7 +92,6 @@ router.delete('/:id', (req, res) => {
 });
 
 // [PUT] task by id
-// will require restricted middleware
 router.put('/:id', restricted, async (req, res) => {
   const { id } = req.params;
   const { task_name, task_completed, event_id } = req.body;

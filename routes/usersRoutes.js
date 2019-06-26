@@ -1,6 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
-// const { restricted } = require('../middleware/restricted');
+const { restricted } = require('../middleware/restricted');
 
 const router = express.Router();
 const db = require('../data/dbConfig');
@@ -9,7 +9,7 @@ const errorMessage = require('../utils/errorMessage');
 const responseMessage = require('../utils/responseMessage');
 
 // [GET] all users
-router.get('/', (req, res) => {
+router.get('/', restricted, (req, res) => {
   Users.getUsers()
       .then((users) => {
         res.status(200).json(users);
@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
 });
 
 // [GET] user by id
-router.get('/:id', (req, res) => {
+router.get('/:id', restricted, (req, res) => {
   const { id } = req.params;
   Users.getUserById(id)
       .then((user) => {
@@ -36,8 +36,7 @@ router.get('/:id', (req, res) => {
 });
 
 // [DELETE] a user by id
-// will need to add restricted middleware
-router.delete('/:id',  (req, res) => {
+router.delete('/:id', restricted, (req, res) => {
   const { id } = req.params;
   Users.deleteUser(id)
       .then((data) => {
@@ -53,8 +52,7 @@ router.delete('/:id',  (req, res) => {
 });
 
 // [PUT] a user by id
-// will need restricted middleware
-router.put('/:id', (req, res) => {
+router.put('/:id', restricted, (req, res) => {
   const { id } = req.params;
   const user = req.body;
   if (user.password) {
