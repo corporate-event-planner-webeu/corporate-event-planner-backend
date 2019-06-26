@@ -50,7 +50,7 @@ describe('authRoutes', () => {
         company: 'test1',
         role: 'admin'  };
       const res = await request(server).post('/api/auth/register').send(newUser);
-      const user = JSON.parse(res.text);
+      const user = await JSON.parse(res.text);
       expect(user.id).toBe(1);
       expect(user.email).toBe(newUser.email);
     });
