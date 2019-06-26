@@ -92,3 +92,23 @@ router.delete('/:id', restricted, (req, res) => {
       });
 });
 
+// [PUT] item by id
+// will require restricted middleware
+router.put('/:id', restricted, async (req, res) => {
+  const { id } = req.params;
+  const { item_name, item_acquired, event_id, price_list } = req.body;
+  const user_id = req.decoded.subject;
+  try {
+    const updatedItem = ShoppingList.verifyAndCleanItem(item_name, item_acquired, event_id, price_list);
+    const data = await ShoppingList.updateItem(updatedItem, id);
+    if (!data) {
+      res.status(404).json(errorMessage.itemNotFound);
+    } else {
+      res.status(200).json({ success: true, ...updatedItem });
+    }
+  } catch (error) {
+    res.status(500).json(errorMessage.itemNotUpdated);
+  }
+});
+
+module.exports = router;
