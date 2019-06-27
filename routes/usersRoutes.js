@@ -27,6 +27,7 @@ router.get('/:id', restricted, (req, res) => {
         if (!user) {
           res.status(404).json(error.userNotFound);
         } else {
+          user.password = undefined;
           res.status(200).json(user);
         }
       })

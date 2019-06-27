@@ -21,17 +21,6 @@ const updateItem = (item, id) => db('shopping_list')
     .where({ id })
     .update(item);
 
-// const markAsCompleted = (task, id) => db('tasks')
-//     .where({ id })
-//     .update(task);
-//
-// const markAsPending = (task, id) => db('tasks')
-//     .where({ id })
-//
-//     .update(task)
-//     .then(ids => getItemById(ids[0]));
-
-
 const notUndefined = (value) => value !== undefined;
 
 const verifyAndCleanItem = (itemName, itemAcquired, eventId, itemPrice) => {

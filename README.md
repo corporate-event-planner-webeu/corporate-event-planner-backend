@@ -1,5 +1,15 @@
 # corporate-event-planner-backend
 
+[Product Canvas](https://docs.google.com/document/d/1ZZl5PvRdH3rN4U2iFprFKlrf3IO-Uvm3kvv9KFfpiM0/edit?usp=sharing)
+
+All API requests made to: https://corporate-event-planner-webeu.herokuapp.com/
+
+Aevent makes it easier for users to manage all aspects of event planning, from tracking tasks, items which need to be purchased, and vendors facilitating the event, all in one place.
+
+### Technologies
+
+Node | Express | Jest| Knex | SqlLite3 | PostgresSQL| Supertest | Bcrypt | JsonWebToken
+
 **Back End URL**: 
 
 ## API documentation
@@ -744,6 +754,29 @@
 }
 ```
 
+### Get a vendor
+
+*method url*: `/api/vendors/:id`
+
+*http method*: **[GET]**
+
+#### Headers
+
+| name           | type   | required | description              |
+| -------------- | ------ | -------- | ------------------------ |
+| `Authorization`| String | Yes      | token to Authorize request  |
+
+#### Response
+##### Example response
+```
+{
+  "id": 4,
+  "vendor_name": "Andres",
+  "event_id": 2,
+  "contact_number": "07842156431",
+  "contact_email": "andres@test.com"
+}
+```
 ### Add a vendor
 
 *method url*: `/api/vendors/:event_id={event_id}`

@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-// const jwtKey = require('../middleware/restricted');
 const jwtKey = process.env.JWT_SECRET;
 
 const generateToken = (user) => {

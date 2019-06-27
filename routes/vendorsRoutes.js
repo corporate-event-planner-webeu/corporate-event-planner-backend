@@ -9,7 +9,6 @@ const responseMessage = require('../utils/responseMessage');
 
 
 const Vendors = require('../api/helpers/vendorsHelpers');
-const Events = require('../api/helpers/eventsHelpers');
 
 // [GET] vendors for event
 router.get('/', restricted, (req, res) => {
