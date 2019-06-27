@@ -9,7 +9,6 @@ const responseMessage = require('../utils/responseMessage');
 
 
 const ShoppingList = require('../api/helpers/shoppingListHelpers');
-const Events = require('../api/helpers/eventsHelpers');
 
 // [GET] shopping list for event
 router.get('/', restricted, (req, res) => {
